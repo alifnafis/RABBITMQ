@@ -7,16 +7,16 @@ if(args.length == 0)
   console.log("Usage: recieve_logs_direct.js [info] [error] [warning]")
 }
 
-const exchange = "directLogs";
+const exchange = "topicLogs";
 
 const recieveMsg = async () => {
   const connection = await amqp.connect('amqp://localhost');
   const channel = await connection.createChannel();
-  await channel.assertExchange(exchange,'direct',{durable: false});
+  await channel.assertExchange(exchange,'topic',{durable: false});
   const q = await channel.assertQueue('', {exclusive: true});
   console.log(`Wating for message in queue ${q.queue}`)
-  args.forEach(function(severity) {
-    channel.bindQueue(q.queue, exchange, severity);
+  args.forEach(function(key) {
+    channel.bindQueue(q.queue, exchange, key);
   })
   channel.consume(q.queue, msg => {
     if(msg.content){
@@ -26,4 +26,6 @@ const recieveMsg = async () => {
 }
 
 recieveMsg()
+
+alghany
 
