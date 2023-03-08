@@ -1,15 +1,14 @@
 const amqp = require('amqplib');
 
-const exchange = "topicLogs";
+const exchange = "headerLogs";
 const args = process.argv.slice(2);
-const msg = args[1] || "Hello WOrld";
-const key = args[0]
+const msg = args[0] || "Hello WOrld";
 
 const sendMsg = async () => {
   const connection = await amqp.connect('amqp://localhost');
   const channel = await connection.createChannel();
-  await channel.assertExchange(exchange,'topic',{durable: false});
-  channel.publish(exchange, key, Buffer.from(msg));
+  await channel.assertExchange(exchange,'headers',{durable: false});
+  channel.publish(exchange, '', Buffer.from(msg), {headers:{account:'new', method:'google'}});
   console.log(`Sent SuccesFully ${msg}`)
   setTimeout(()=> {
     connection.close();
