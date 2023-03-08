@@ -2,7 +2,7 @@ const amqp = require('amqplib');
 
 const queue = "hello";
 
-const sendMsg = async () => {
+const recieveMsg = async () => {
   const connection = await amqp.connect('amqp://localhost');
   const channel = await connection.createChannel();
   await channel.assertQueue(queue, {durable: false});
@@ -12,5 +12,5 @@ const sendMsg = async () => {
   }, {noAck:true})
 }
 
-sendMsg()
+recieveMsg()
 
