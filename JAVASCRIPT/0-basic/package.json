@@ -1,0 +1,16 @@
+{
+  "name": "rmq",
+  "version": "1.0.0",
+  "description": "",
+  "main": "publish.js",
+  "scripts": {
+    "publish": "node publish.js",
+    "consume": "node consume.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "amqplib": "^0.10.3"
+  }
+}
